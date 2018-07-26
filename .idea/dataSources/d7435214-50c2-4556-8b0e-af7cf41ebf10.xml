@@ -1114,57 +1114,109 @@
       <DefaultForCharset>0</DefaultForCharset>
     </collation>
     <table id="280" parent="6" name="hibernate_sequence"/>
-    <table id="281" parent="6" name="users"/>
-    <column id="282" parent="280" name="next_val">
+    <table id="281" parent="6" name="roles"/>
+    <table id="282" parent="6" name="user_role"/>
+    <table id="283" parent="6" name="users"/>
+    <column id="284" parent="280" name="next_val">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="283" parent="281" name="id">
+    <column id="285" parent="281" name="id">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="284" parent="281" name="first_name">
+    <column id="286" parent="281" name="name">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="285" parent="281" name="second_name">
+    <key id="287" parent="281" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="288" parent="282" name="user_id">
+      <Position>1</Position>
+      <DataType>bigint(20)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="289" parent="282" name="role_id">
+      <Position>2</Position>
+      <DataType>bigint(20)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="290" parent="282" name="UK_it77eq964jhfqtu54081ebtio">
+      <ColNames>role_id</ColNames>
+      <Unique>1</Unique>
+      <Type>btree</Type>
+    </index>
+    <key id="291" parent="282" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>user_id
+role_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="292" parent="282" name="UK_it77eq964jhfqtu54081ebtio">
+      <ColNames>role_id</ColNames>
+      <UnderlyingIndexName>UK_it77eq964jhfqtu54081ebtio</UnderlyingIndexName>
+    </key>
+    <foreign-key id="293" parent="282" name="FKj345gk1bovqvfame88rcx7yyx">
+      <ColNames>user_id</ColNames>
+      <RefSchemaName>spring_web_app_db</RefSchemaName>
+      <RefTableName>users</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="294" parent="282" name="FKt7e7djp752sqn6w22i6ocqy6q">
+      <ColNames>role_id</ColNames>
+      <RefSchemaName>spring_web_app_db</RefSchemaName>
+      <RefTableName>roles</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="295" parent="283" name="id">
+      <Position>1</Position>
+      <DataType>bigint(20)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="296" parent="283" name="first_name">
+      <Position>2</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="297" parent="283" name="second_name">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="286" parent="281" name="login">
+    <column id="298" parent="283" name="login">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="287" parent="281" name="password">
+    <column id="299" parent="283" name="password">
       <Position>5</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="288" parent="281" name="role">
-      <Position>6</Position>
-      <DataType>varchar(255)|0s</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <index id="289" parent="281" name="UK_ow0gan20590jrb00upg3va2fn">
+    <index id="300" parent="283" name="UK_ow0gan20590jrb00upg3va2fn">
       <ColNames>login</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="290" parent="281" name="PRIMARY">
+    <key id="301" parent="283" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="291" parent="281" name="UK_ow0gan20590jrb00upg3va2fn">
+    <key id="302" parent="283" name="UK_ow0gan20590jrb00upg3va2fn">
       <ColNames>login</ColNames>
       <UnderlyingIndexName>UK_ow0gan20590jrb00upg3va2fn</UnderlyingIndexName>
     </key>

@@ -1,5 +1,6 @@
 package com.bogdanovpd.spring.webapp.service;
 
+import com.bogdanovpd.spring.webapp.model.Role;
 import com.bogdanovpd.spring.webapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +29,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("User not found");
         }
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(user.getRole().name()));
+        for (Role role : user.getRoles()) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
         return new User(user.getLogin(), encoder.encode(user.getPassword()), authorities);
     }
 

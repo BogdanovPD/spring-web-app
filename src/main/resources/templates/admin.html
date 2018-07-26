@@ -23,7 +23,7 @@
             <td th:text="${user.login}"/>
             <td th:text="${user.firstName}"/>
             <td th:text="${user.lastName}"/>
-            <td th:text="${user.role}"/>
+            <td><p th:each="role : ${user.roles}" th:text="${role.name}" /></td>
             <td>
                 <form method="get" th:action="@{|/users/${user.id}/edit|}">
                     <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-edit" style="font-size: small"></span> </button>

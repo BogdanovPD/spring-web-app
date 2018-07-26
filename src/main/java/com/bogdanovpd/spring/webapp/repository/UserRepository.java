@@ -14,4 +14,5 @@ public interface UserRepository extends CrudRepository<User, Long> {
     Long deleteUserById(long id);
 
     List<User> findAll();
+
 }

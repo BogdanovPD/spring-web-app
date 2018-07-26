@@ -1,6 +1,5 @@
 package com.bogdanovpd.spring.webapp.config;
 
-import com.bogdanovpd.spring.webapp.model.UserRoles;
 import com.bogdanovpd.spring.webapp.util.UserAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -8,14 +7,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
-
-import javax.servlet.http.HttpSession;
-import java.util.stream.Collectors;
 
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -32,8 +24,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/user**").hasAnyAuthority(UserRoles.ROLE_ADMIN.name(), UserRoles.ROLE_USER.name())
-                .antMatchers("/admin**").hasAuthority(UserRoles.ROLE_ADMIN.name())
+                .antMatchers("/user**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .antMatchers("/admin**").hasAuthority("ROLE_ADMIN")
                 .and()
                 .formLogin().loginPage("/login")
                 .failureUrl("/login?error")

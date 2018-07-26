@@ -1,6 +1,7 @@
 package com.bogdanovpd.spring.webapp.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -8,7 +9,7 @@ public class User {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "login", unique = true, nullable = false)
     private String login;
@@ -19,9 +20,10 @@ public class User {
     @Column(name = "second_name")
     private String lastName;
 
-    @Column(name = "role", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private UserRoles role;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
     public User(){}
 
@@ -65,11 +67,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public UserRoles getRole() {
-        return role;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(UserRoles role) {
-        this.role = role;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

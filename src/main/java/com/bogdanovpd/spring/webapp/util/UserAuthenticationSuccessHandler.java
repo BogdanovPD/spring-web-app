@@ -1,6 +1,5 @@
 package com.bogdanovpd.spring.webapp.util;
 
-import com.bogdanovpd.spring.webapp.model.UserRoles;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -16,10 +15,10 @@ public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHa
     public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse resp, Authentication auth) throws IOException, ServletException {
         resp.setStatus(resp.SC_OK);
 
-        if (containsRole(auth, UserRoles.ROLE_ADMIN.name())) {
+        if (containsRole(auth, "ROLE_ADMIN")) {
             resp.sendRedirect("/admin");
         }
-        if (containsRole(auth, UserRoles.ROLE_USER.name())) {
+        if (containsRole(auth, "ROLE_USER")) {
             resp.sendRedirect("/user");
         }
     }
