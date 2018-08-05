@@ -3,31 +3,37 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Auth</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 </head>
-<body>
-    <div style="font-size: medium; margin: 5px; color: red" th:if="${err != null}">
-        <h3 th:text="${err}"></h3>
-    </div>
-<div th:switch="${authUser}">
-    <form th:case="anonymousUser" th:action="@{/login}" method="post">
-        <div class="form-group" style="width: 30%; margin: 5px">
-            <label for="login">Name:</label>
-            <input type="text" class="form-control" name="login" id="login" required>
+<body style="background: #f2f2f2">
+<div class="container-fluid">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+        <div class="jumbotron"  style="margin-top: 150px; background: transparent !important" th:switch="${authUser}">
+            <div style="font-size: medium; margin: 5px; color: red" th:if="${err != null}">
+                <p class="lead" th:text="${err}"></p>
+            </div>
+            <form th:case="anonymousUser" th:action="@{/login}" method="post">
+                <div class="form-group">
+                    <input type="text" placeholder="Enter Login" class="form-control" name="login" id="login" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" placeholder="Password" class="form-control" name="pass" id="pass" required>
+                </div>
+                <button type="submit" class="btn btn-primary form-control">Sign In</button>
+            </form>
+            <div class="form-group" th:case="*" style="font-size: medium; color: red">
+                <form th:action="@{/logout}" method="post">
+                    <p class="lead">You're already logged in</p>
+                    <p class="lead">
+                        <button type="submit" class="btn btn-primary form-control">Log Out</button>
+                    </p>
+                </form>
+            </div>
         </div>
-        <div class="form-group" style="width: 30%; margin: 5px">
-            <label for="pass">Password:</label>
-            <input type="password" class="form-control" name="pass" id="pass" required>
-        </div>
-        <button type="submit" style="margin: 5px" class="btn btn-default btn-lg">Sign In</button>
-    </form>
-    <div th:case="*" style="font-size: medium; margin: 5px; color: red">
-        <h3>You're already logged in</h3>
-        <form th:action="@{/logout}" method="post">
-            <button type="submit" class="btn btn-default btn-lg">Log Out</button>
-        </form>
     </div>
+    <div class="col-lg-4"></div>
 </div>
 </body>
 </html>

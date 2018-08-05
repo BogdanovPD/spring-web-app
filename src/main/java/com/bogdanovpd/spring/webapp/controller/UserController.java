@@ -1,5 +1,6 @@
 package com.bogdanovpd.spring.webapp.controller;
 
+import com.bogdanovpd.spring.webapp.model.Role;
 import com.bogdanovpd.spring.webapp.model.User;
 import com.bogdanovpd.spring.webapp.service.RoleService;
 import com.bogdanovpd.spring.webapp.service.UserService;
@@ -9,6 +10,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.HashSet;
 
 @Controller
 public class UserController {
@@ -22,6 +26,21 @@ public class UserController {
     public String main(Model model) {
         SecurityContext context = SecurityContextHolder.getContext();
         model.addAttribute("authUser", context.getAuthentication().getName());
+        if (roleService.getAllRoles().isEmpty()){
+            Role roleUser = new Role("ROLE_USER");
+            Role roleAdmin = new Role("ROLE_ADMIN");
+            roleService.save(roleUser);
+            roleService.save(roleAdmin);
+        }
+        if (userService.getAllUsers().isEmpty()) {
+            User user = new User();
+            user.setLogin("admin");
+            user.setPassword("ppp");
+            user.setFirstName("pavel");
+            user.setLastName("bogdanov");
+            user.setRoles(new HashSet<>(Arrays.asList(roleService.getRoleByName("ROLE_ADMIN"))));
+            userService.save(user);
+        }
         return "auth";
     }
 
@@ -39,6 +58,8 @@ public class UserController {
     @GetMapping("/admin")
     public String admin(Model model) {
         model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("user", new User());
+        model.addAttribute("roles", roleService.getAllRoles());
         return "admin";
     }
 
@@ -50,12 +71,12 @@ public class UserController {
         return "user";
     }
 
-    @PostMapping("/addUser")
-    public String addUser(Model model) {
-        model.addAttribute("user", new User());
-        model.addAttribute("roles", roleService.getAllRoles());
-        return "userForm";
-    }
+//    @PostMapping("/addUser")
+//    public String addUser(Model model) {
+//        model.addAttribute("user", new User());
+//        model.addAttribute("user_roles", roleService.getAllRoles());
+//        return "userForm";
+//    }
 
     @GetMapping("/users/{id}/delete")
     public String deleteUser(@PathVariable("id") long id) {
@@ -67,7 +88,7 @@ public class UserController {
     public String editUser(@PathVariable("id") long id, Model model) {
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
-        model.addAttribute("roles", user.getRoles());
+        model.addAttribute("roles", roleService.getAllRoles());
         return "userForm";
     }
 

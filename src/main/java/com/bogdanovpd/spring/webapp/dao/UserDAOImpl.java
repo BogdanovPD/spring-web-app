@@ -1,6 +1,7 @@
 package com.bogdanovpd.spring.webapp.dao;
 
 import com.bogdanovpd.spring.webapp.model.User;
+import com.bogdanovpd.spring.webapp.repository.UserRepository;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,43 +12,34 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class UserDAOImpl
-        //implements UserDAO
+public class UserDAOImpl implements UserDAO
 {
 
-//    @Autowired
-//    private SessionFactory sessionFactory;
-//
-//    @Override
-//    public void save(User user) {
-//        sessionFactory.getCurrentSession().saveOrUpdate(user);
-//    }
-//
-//    @Override
-//    public void deleteUser(long id) {
-//        sessionFactory.getCurrentSession().delete(getUserById(id));
-//    }
-//
-//    @Override
-//    public List<User> selectAllUsers() {
-//        Query<User> users = sessionFactory.getCurrentSession()
-//                .createQuery("from User");
-//        return users.getResultList();
-//    }
-//
-//    @Override
-//    public User getUserById(long id) {
-//        return sessionFactory.getCurrentSession().find(User.class, id);
-//    }
-//
-//    @Override
-//    public User getUserByLogin(String login) {
-//        Query<User> q = sessionFactory.getCurrentSession().createQuery("FROM User where login=:login");
-//        q.setParameter("login", login);
-//        List<User> list = q.getResultList();
-//        if (list.isEmpty()) {
-//            return null;
-//        }
-//        return q.getSingleResult();
-//    }
+    @Autowired
+    private UserRepository repository;
+
+    @Override
+    public void save(User user) {
+        repository.save(user);
+    }
+
+    @Override
+    public void deleteUser(long id) {
+        repository.delete(getUserById(id));
+    }
+
+    @Override
+    public List<User> selectAllUsers() {
+        return repository.findAll();
+    }
+
+    @Override
+    public User getUserById(long id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    @Override
+    public User getUserByLogin(String login) {
+        return repository.getUserByLogin(login);
+    }
 }

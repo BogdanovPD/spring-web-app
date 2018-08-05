@@ -2,9 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Auth</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 </head>
 <body>
     <form th:action="@{/saveUser}" method="post" th:object="${user}" style="margin: 5px">
@@ -27,11 +24,11 @@
         <div class="form-group" style="margin: 5px; width: 30%">
             <label>User role: </label>
             <select class="form-control" th:field="*{roles}" multiple>
-                <option th:each="role : ${roles}" th:value="${role}" th:text="${role}"/>
+                <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role}"/>
             </select>
         </div>
         <input type="hidden" name="userId" th:field="*{id}"/>
-        <button style="margin: 5px; margin-top: 15px" class="btn btn-default btn-lg" type="submit">Submit</button>
+        <button style="margin: 5px; margin-top: 15px" class="btn btn-primary" type="submit">Submit</button>
     </form>
 </body>
 </html>

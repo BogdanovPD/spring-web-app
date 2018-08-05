@@ -1,5 +1,6 @@
 package com.bogdanovpd.spring.webapp.service;
 
+import com.bogdanovpd.spring.webapp.dao.UserDAO;
 import com.bogdanovpd.spring.webapp.model.User;
 import com.bogdanovpd.spring.webapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,30 +14,30 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserDAO dao;
 
     @Override
     public void save(User user) {
-        userRepository.save(user);
+        dao.save(user);
     }
 
     @Override
     public void deleteUser(long id) {
-        userRepository.deleteUserById(id);
+        dao.deleteUser(id);
     }
 
     @Override
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return dao.selectAllUsers();
     }
 
     @Override
     public User getUserById(long id) {
-        return userRepository.getUserById(id);
+        return dao.getUserById(id);
     }
 
     @Override
     public User getUserByLogin(String login) {
-        return userRepository.getUserByLogin(login);
+        return dao.getUserByLogin(login);
     }
 }
