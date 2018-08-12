@@ -9,4 +9,5 @@ public interface RolesDao {
     List<Role> findAll();
     Role getRoleByName(String name);
     void save(Role role);
+    Role getRoleById(Long id);
 }

@@ -20,9 +20,14 @@ public class UserRestController {
         return service.getAllUsers();
     }
 
-    @GetMapping("{id}")
-    public User read(@PathVariable long id) {
-        return service.getUserById(id);
+    @GetMapping("{field}")
+    public User read(@PathVariable String field) {
+        try {
+            long id = Long.valueOf(field);
+            return service.getUserById(id);
+        } catch (NumberFormatException e) {
+            return service.getUserByLogin(field);
+        }
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -34,11 +39,11 @@ public class UserRestController {
         return user;
     }
 
-    @PutMapping("{id}")
+    @PutMapping(value = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public User update(@PathVariable long id, @RequestBody User user){
-        if (user.getId() == id && service.getUserById(id) != null) {
-            service.save(user);
-        }
+        user.setId(id);
+        service.save(user);
         return user;
     }
 

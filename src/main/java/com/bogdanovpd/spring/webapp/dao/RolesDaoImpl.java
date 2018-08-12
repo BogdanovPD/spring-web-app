@@ -29,4 +29,9 @@ public class RolesDaoImpl implements RolesDao {
     public void save(Role role) {
         repository.save(role);
     }
+
+    @Override
+    public Role getRoleById(Long id) {
+        return repository.getRoleById(id);
+    }
 }
