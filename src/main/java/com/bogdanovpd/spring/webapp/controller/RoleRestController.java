@@ -20,9 +20,14 @@ public class RoleRestController {
         return service.getAllRoles();
     }
 
-    @GetMapping("{id}")
-    public Role read(@PathVariable long id) {
-        return service.getRoleByID(id);
+    @GetMapping("{field}")
+    public Role read(@PathVariable String field) {
+        try {
+            long id = Long.valueOf(field);
+            return service.getRoleByID(id);
+        } catch (NumberFormatException e) {
+            return service.getRoleByName(field);
+        }
     }
 
 }
